@@ -56,6 +56,7 @@ void haxpy(int n, half a, const half *x, half *y)
   int n2 = n/2;
   half2 *x2 = (half2*)x, *y2 = (half2*)y;
 
+  
   for (int i = start; i < n2; i+= stride) 
     y2[i] = __hfma2(__halves2half2(a, a), x2[i], y2[i]);
 
@@ -67,6 +68,7 @@ void haxpy(int n, half a, const half *x, half *y)
   for (int i = start; i < n; i+= stride) {
     y[i] = __float2half(__half2float(a) * __half2float(x[i]) 
       + __half2float(y[i]));
+    y[i] = __hmul(y[i], y[i]); 
   }
 #endif
 }
@@ -82,7 +84,7 @@ int main(void) {
   
   for (int i = 0; i < n; i++) {
     x[i] = approx_float_to_half(1.0f);
-    y[i] = approx_float_to_half((float)i);
+    y[i] = approx_float_to_half((float)i);  
   }
 
   const int blockSize = 256;

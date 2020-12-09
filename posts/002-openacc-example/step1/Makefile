@@ -26,7 +26,7 @@
 
 CC       = pgcc
 CCFLAGS  = -I../common
-ACCFLAGS = -acc -ta=nvidia,time -Minfo=accel
+ACCFLAGS = -acc -ta=tesla,time -Minfo=accel
 OMPFLAGS = -fast -mp -Minfo
 
 BIN =  laplace2d_omp laplace2d_acc

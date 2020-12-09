@@ -14,20 +14,17 @@
 #  limitations under the License.
 #
 
-CC       = pgcc
-CCFLAGS  = -I./common
-ACCFLAGS = -acc -ta=tesla:managed -Minfo=accel
+CC       = pgc++
+CCFLAGS  = -g -fPIC -acc -mp -Minfo -fast -shared -I ./common
+ACCFLAGS = -fast -acc -mp -Minfo=accel
 OMPFLAGS = -fast -mp -Minfo
 
-BIN =  laplace2d_omp laplace2d_acc
+BIN =  laplace2d_acc
 
 all: $(BIN)
 
-laplace2d_acc: laplace2d.c
+laplace2d_acc: laplace2d.cpp
 	$(CC) $(CCFLAGS) $(ACCFLAGS) -o $@ $<
-
-laplace2d_omp: laplace2d.c
-	$(CC) $(CCFLAGS) $(OMPFLAGS) -o $@ $<
 
 clean:
 	$(RM) $(BIN)
